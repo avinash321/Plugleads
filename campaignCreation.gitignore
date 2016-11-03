@@ -1,8 +1,14 @@
 package com.plugleads;
 
-import org.openqa.selenium.By;
 
+import java.util.Calendar;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class Test 
@@ -10,7 +16,8 @@ public class Test
 
 	public static void main(String[] args) throws InterruptedException {
 		System.out.println("Start");
-
+		String campaignName="Test camp 001";
+		
 		   //System.setProperty("webdriver.firefox.marionette","/home/nexii/Downloads/geckodriver");
 		   
            // if above property is not working or not opening the application in browser then try below property
@@ -23,16 +30,209 @@ public class Test
           driver.findElement(By.id("emailide")).sendKeys("avinash.kandagatla@plugleads.com");
 			driver.findElement(By.id("passworde")).sendKeys("mypassword");
 			driver.findElement(By.xpath(".//*[@id='loginform']/button")).click();
-			Thread.sleep(5000);
+			Thread.sleep(4000);
           
-			driver.findElement(By.xpath(".//*[@id='dashboardic']")).click();
-
-			Thread.sleep(5000);
-	     	
-	     	driver.findElement(By.xpath(".//*[@id='newcmplink']")).click();
+	
+          // New Campaign Code
          
+      	driver.findElement(By.xpath(".//*[@id='dashboardic']")).click();
+     	Thread.sleep(6000);
+     	
+     	driver.findElement(By.xpath(".//*[@id='newcmplink']")).click();
+     	Thread.sleep(6000);
+     	
+     	driver.findElement(By.id("spamok")).click();
+     	Thread.sleep(6000);
+ 
+     	JavascriptExecutor js = (JavascriptExecutor)driver;
+     	 // if the element is on top.
+     	js.executeScript("scroll(250, 0)");
+    	WebElement element1 = driver.findElement(By.id("Africa1"));
+    	element1.click();
 
+     	Thread.sleep(2000);
+     	driver.findElement(By.id("clickMeId")).click();
+     	
+     	Thread.sleep(3000);
+     	driver.findElement(By.id("twoId")).sendKeys("10");
+     	Thread.sleep(2000);
+     	driver.findElement(By.id("twoId")).sendKeys(Keys.ENTER);
+     	Thread.sleep(3000);
+   
+     	// New Date Time implementation
+     	
+     	String dateTime ="05/05/2016 16:00 PM"; 
+     	
+        WebElement selectDate = driver.findElement(By.id("campaigndate"));
+		selectDate.click();
+		Thread.sleep(1000);
+		
+	    //button to move next in calendar
+		 
+	    WebElement nextLink = driver.findElement(By.xpath(".//*[@id='indexBody']/div[1]/div[1]/div[1]/button[3]"));
+	 
+	    //button to click in center of calendar header
+	 
+	    WebElement midLink = driver.findElement(By.xpath(".//*[@id='indexBody']/div[1]/div[1]/div[1]/button[2]"));
+	 
+	    //button to move previous month in calendar
+	 
+	    WebElement previousLink = driver.findElement(By.xpath(".//*[@id='indexBody']/div[1]/div[1]/div[1]/button[1]")); 
+	 
+	        //Split the date time to get only the date part
+	 
+	        String date_dd_MM_yyyy[] = (dateTime.split(" ")[0]).split("/");
+	 
+	        //get the year difference between current year and year to set in calander
+	 
+	        int yearDiff = Integer.parseInt(date_dd_MM_yyyy[2])- Calendar.getInstance().get(Calendar.YEAR);
+	 
+	        midLink.click();
+	 
+/*	        if(yearDiff!=0){
+	 
+	            //if you have to move next year
+	 
+	            if(yearDiff>0){
+	 
+	                for(int i=0;i< yearDiff;i++){
+	 
+	                    System.out.println("Year Diff->"+i);
+	 
+	                    nextLink.click();
+	 
+	                }
+	 
+	            }
+	 
+	            //if you have to move previous year
+	 
+	            else if(yearDiff<0){
+	 
+	                for(int i=0;i< (yearDiff*(-1));i++){
+	 
+	                    System.out.println("Year Diff->"+i);
+	 
+	                    previousLink.click();
+	 
+	                }
+	 
+	            }
+	 
+	        }
+	 
+	         
+	 */
+	       
+	   
+			 
+	        //Get all months from calendar to select correct one
+	 
+	      //  List<WebElement> list_AllMonthToBook = driver.findElements(By.xpath(".//*[@id='indexBody']/div[1]/div[1]/div[1]/div[1]/div"));
+	 
+	         
+	 
+	       //list_AllMonthToBook.get(Integer.parseInt(date_dd_MM_yyyy[1])-1).click();
+	     
+	         
+	 
+	  
+	 
+	        //get all dates from calendar to select correct one
+	 
+	       // List<WebElement> list_AllDateToBook = driver.findElements(By.xpath(".//*[@id='indexBody']/div[1]/div[1]/div[2]/table"));
+	 
+	         
+	 
+	        //list_AllDateToBook.get(Integer.parseInt(date_dd_MM_yyyy[0])-1).click();
+	 
+	           // PERTICULAR DATE SELECTION USING XPATH  For Selecting MAy 22nd Date
+/*		        
+	    	WebElement date = driver.findElement(By.xpath(".//*[@id='indexBody']/div[1]/div[1]/div[2]/table/tbody/tr[4]/td[7]/div"));
+			date.click();
+			
+			
+	         */
+	 
+	        ///FOR TIME
+	 
+	        WebElement selectTime = driver.findElement(By.xpath(".//*[@id='indexBody']/div[1]/div[2]"));
+	 
+	        //click time picker button
+	 
+	        selectTime.click();
+	 
+	        //get list of times
+	 
+	        List<WebElement> allTime = driver.findElements(By.xpath(".//*[@id='indexBody']/div[1]/div[2]/div/div[1]/div[860]"));
+	 
+	       
+	 
+	        dateTime = dateTime.split(" ")[1]+" "+dateTime.split(" ")[2];
+	 
+	     //select correct time
+	 
+	        for (WebElement webElement : allTime) {
+	 
+	            if(webElement.getText().equalsIgnoreCase(dateTime))
+	 
+	            {
+	 
+	                webElement.click();
+	 
+	            }
+	         // Date selection code was done 
+	 
+	        }
+	        
+	        Thread.sleep(3000);
+	        driver.findElement(By.xpath(".//*[@id='reuseId']")).click();
+	        Thread.sleep(2000);
+	        driver.findElement(By.xpath(".//*[@id='reuseBox']/div[1]/div[2]/button[1]")).click();
+	        Thread.sleep(2000);
+	        driver.findElement(By.xpath(".//*[@id='nextReuseButt']")).click();
+	        Thread.sleep(2000);
+	        driver.findElement(By.xpath(".//*[@id='noOfFollowUp']")).clear();
+	        driver.findElement(By.xpath(".//*[@id='noOfFollowUp']")).sendKeys("0");
+	        driver.findElement(By.xpath(".//*[@id='noOfFollowUp']")).click();
+	        
+	        driver.findElement(By.xpath(".//*[@id='7']/codeclient")).click();
+	        Thread.sleep(3000);
+	        
+	       // Campaign Details Page Code  ()****************************************************************************
+	        
+	        driver.findElement(By.id("camp_name")).sendKeys(campaignName);	//
+	        driver.findElement(By.id("camp_subject")).sendKeys(campaignName+ " subject");
+	   
+	        driver.findElement(By.xpath(".//*[@id='w4-primary']/div[2]/div[2]/div/div/button")).click();	//Countries
+	        driver.findElement(By.xpath(".//*[@id='w4-primary']/div[2]/div[2]/div/div/ul/li[1]/a/label/input")).click();
+	        Thread.sleep(2000);
+	        
 
+	        
+	        driver.findElement(By.xpath(".//*[@id='w4-primary']/div[3]/div[3]/div/div/button")).click();	//Industries
+	        driver.findElement(By.xpath(".//*[@id='w4-primary']/div[3]/div[3]/div/div/ul/li[1]/a/label/input")).click();
+	        Thread.sleep(2000);
+	        
+	        driver.findElement(By.xpath(".//*[@id='w4-primary']/div[3]/div[2]/div/div/button")).click();	//Designations
+	        driver.findElement(By.xpath(".//*[@id='w4-primary']/div[3]/div[2]/div/div/ul/li[1]/a/label/input")).click();
+	        Thread.sleep(2000);
+	        
+	        driver.findElement(By.xpath(".//*[@id='nextbutton']")).click();
+	        
+	        // Campaign details page End------------------------------------------------------------------------
+	        
+	        driver.findElement(By.id("im_response_time_line")).sendKeys("1");
+	        Thread.sleep(1000);
+	        driver.switchTo().frame(driver.findElement(By.tagName("iframe")));
+	        WebElement element = driver.findElement(By.cssSelector(".cke_editable.cke_editable_themed.cke_contents_ltr.cke_show_borders>p"));
+	        ((JavascriptExecutor)driver).executeScript("arguments[0].innerHTML = '<h6>This is the Intro body for my campaign</h6>'", element);
+	        driver.switchTo().defaultContent();
+	        Thread.sleep(2000);
+	        driver.findElement(By.id("nextbutton")).click();
+	        Thread.sleep(2000);
+	        driver.findElement(By.id("finishbutton")).click();
+	        
 	}
 
 }
