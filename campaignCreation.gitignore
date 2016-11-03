@@ -1,0 +1,37 @@
+package com.plugleads;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class Test 
+{
+
+	public static void main(String[] args) throws InterruptedException {
+		System.out.println("Start");
+
+		   //System.setProperty("webdriver.firefox.marionette","/home/nexii/Downloads/geckodriver");
+		   
+           // if above property is not working or not opening the application in browser then try below property
+
+           System.setProperty("webdriver.gecko.driver","/home/nexii/Downloads/geckodriver");
+
+           WebDriver driver = new FirefoxDriver();
+
+          driver.get("http://lenovo.plugleads.com");
+          driver.findElement(By.id("emailide")).sendKeys("avinash.kandagatla@plugleads.com");
+			driver.findElement(By.id("passworde")).sendKeys("mypassword");
+			driver.findElement(By.xpath(".//*[@id='loginform']/button")).click();
+			Thread.sleep(5000);
+          
+			driver.findElement(By.xpath(".//*[@id='dashboardic']")).click();
+
+			Thread.sleep(5000);
+	     	
+	     	driver.findElement(By.xpath(".//*[@id='newcmplink']")).click();
+         
+
+
+	}
+
+}
